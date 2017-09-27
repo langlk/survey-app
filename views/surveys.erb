@@ -14,11 +14,13 @@
 
 <% if @mode == "design" %>
   <h3>Create a Survey</h3>
+
   <form class="" action="/design/surveys" method="post">
     <div class="form-group <%= @survey ? 'has-error' : nil %>">
       <label for="title" class="control-label">Survey Title</label>
       <input type="text" name="title" class="form-control">
     </div>
+
     <% if @survey %>
       <div class="alert alert-danger">
         <% @survey.errors.full_messages.each do |message| %>
@@ -26,6 +28,7 @@
         <% end %>
       </div>
     <% end %>
+    
     <button type="submit" class="btn">Add Survey</button>
   </form>
 <% end %>

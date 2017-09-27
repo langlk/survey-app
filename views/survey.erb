@@ -9,7 +9,7 @@
     <% @survey.questions.each do |question| %>
       <li>
         <% if @mode == "design" %>
-            <%= question.number %>. <%= question.question_text %>
+            <%= question.number %>. <%= question.question_text %> <a href="/design/questions/<%= question.id %>/edit">Edit or Remove</a>
         <% end %>
       </li>
     <% end %>
@@ -20,17 +20,28 @@
 
 <% if @mode == "design" %>
   <h3>Add a Question</h3>
+
   <form class="" action="/design/surveys/<%= @survey.id %>/add-question" method="post">
     <div class="row">
       <div class="form-group col-xs-2">
         <label for="number" class="control-label">Number:</label>
         <input type="number" name="number" class="form-control">
       </div>
-      <div class="form-group col-xs-10">
+
+      <div class="form-group col-xs-10 <%= @question ? 'has-error' : nil %>">
         <label for="question-text" class="control-label">Question:</label>
         <input type="text" name="question-text" class="form-control">
       </div>
     </div>
+
+    <% if @question %>
+      <div class="alert alert-danger">
+        <% @question.errors.full_messages.each do |message| %>
+          <%= message + " " %>
+        <% end %>
+      </div>
+    <% end %>
+
     <button type="submit" class="btn">Add Question</button>
   </form>
 <% end %>

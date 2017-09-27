@@ -1,0 +1,32 @@
+<h1>Edit Question</h1>
+
+<form class="" action="/design/questions/<%= @question.id %>/edit" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <div class="row">
+    <div class="form-group col-xs-2">
+      <label for="number" class="control-label">Number:</label>
+      <input type="number" name="number" class="form-control" value="<%= @question.number %>">
+    </div>
+
+    <div class="form-group col-xs-10 <%= @question.errors.any? ? 'has-error' : nil %>">
+      <label for="question-text" class="control-label">Question:</label>
+      <input type="text" name="question-text" class="form-control" value="<%= @question.question_text %>">
+    </div>
+  </div>
+
+  <% if @question.errors.any? %>
+    <div class="alert alert-danger">
+      <% @question.errors.full_messages.each do |message| %>
+        <%= message + " " %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <a href="/design/surveys/<%= @question.survey_id %>"><button type="button" class="btn">Cancel</button></a>
+  <button type="submit" class="btn">Update Question</button>
+</form>
+
+<form class="" action="/design/questions/<%= @question.id %>/delete" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class="btn">Delete Question</button>
+</form>
