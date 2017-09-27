@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
 
 class Question < ActiveRecord::Base
+  belongs_to(:survey)
 end

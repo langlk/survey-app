@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
 class Survey < ActiveRecord::Base
+  has_many(:questions)
+  validates(:title, :presence => true)
   before_save(:capitalize_title)
 
 private
