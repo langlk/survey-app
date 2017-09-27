@@ -7,25 +7,49 @@ get '/' do
   erb(:index)
 end
 
-get '/surveys/:mode' do
+get '/:mode/surveys' do
   @mode = params[:mode]
   @surveys = Survey.all
   erb(:surveys)
 end
 
-get '/surveys/:mode/:id' do
+post '/design/surveys' do
+  @survey = Survey.new({title: params["title"]})
+  if @survey.save
+    redirect "/design/surveys/#{@survey.id}"
+  else
+    @surveys = Survey.all
+    @mode = "design"
+    erb(:surveys)
+  end
+end
+
+get '/:mode/surveys/:id' do
   @mode = params[:mode]
   @survey = Survey.find(params[:id].to_i)
   erb(:survey)
 end
 
-post '/surveys/design' do
-  @survey = Survey.new({title: params["title"]})
-  if @survey.save
-    redirect "/surveys/design/#{@survey.id}"
+get '/design/surveys/:id/edit' do
+  @survey = Survey.find(params[:id].to_i)
+  erb(:survey_edit)
+end
+
+patch '/design/surveys/:id/edit' do
+  @survey = Survey.find(params[:id].to_i)
+  if @survey.update({title: params["title"]})
+    redirect "/design/surveys/#{@survey.id}"
   else
-    @surveys = Survey.all
-    @mode = "design"
-    erb(:surveys)
+    erb(:survey_edit)
+  end
+end
+
+delete '/design/surveys/:id/delete' do
+  @survey = Survey.find(params[:id].to_i)
+  if @survey.destroy
+    redirect '/design/surveys'
+  else
+    @object = @survey
+    erb(:errors)
   end
 end

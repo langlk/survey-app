@@ -1,6 +1,6 @@
 <h1><%= @survey.title %></h1>
 <% if @mode == "design" %>
-  <h5><a href="/surveys/<%= @survey.id %>/edit">Edit</a></h5>
+  <h5><a href="/design/surveys/<%= @survey.id %>/edit">Edit</a></h5>
 <% end %>
 
 <h3>Survey Questions</h3>
@@ -20,7 +20,7 @@
 
 <% if @mode == "design" %>
   <h3>Add a Question</h3>
-  <form class="" action="/surveys/<%= @survey.id %>/add-question" method="post">
+  <form class="" action="/design/surveys/<%= @survey.id %>/add-question" method="post">
     <div class="row">
       <div class="form-group col-xs-2">
         <label for="number" class="control-label">Number:</label>

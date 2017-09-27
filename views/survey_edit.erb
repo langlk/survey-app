@@ -1,0 +1,23 @@
+<h1>Edit Survey</h1>
+
+<form class="" action="/design/surveys/<%= @survey.id %>/edit" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <div class="form-group <%= @survey.errors.any? ? 'has-error' : nil %>">
+    <label for="title" class="control-label">Survey Title</label>
+    <input type="text" name="title" class="form-control" value="<%= @survey.title %>">
+  </div>
+  <% if @survey.errors.any? %>
+    <div class="alert alert-danger">
+      <% @survey.errors.full_messages.each do |message| %>
+        <%= message + " "%>
+      <% end %>
+    </div>
+  <% end %>
+  <button type="button" class="btn">Cancel</button>
+  <button type="submit" class="btn">Update Survey</button>
+</form>
+
+<form class="" action="/design/surveys/<%= @survey.id %>/delete" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class="btn">Delete Survey</button>
+</form>
