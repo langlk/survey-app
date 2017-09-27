@@ -8,7 +8,7 @@
   <ul>
     <% @survey.questions.each do |question| %>
       <li>
-        <% if @mode = "design" %>
+        <% if @mode == "design" %>
             <%= question.number %>. <%= question.question_text %>
         <% end %>
       </li>
