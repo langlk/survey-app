@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
-class Question
+class Question < ActiveRecord::Base
 end
