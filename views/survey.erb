@@ -17,8 +17,11 @@
             <ul class="answers">
               <% question.answers.each do |answer| %>
                 <li>
-                  <%= answer.answer_text %>
-                  <a href="/design/answers/<%= answer.id %>/edit">Edit or Remove</a>
+                  <p>
+                    <%= answer.answer_text %>
+                    <a href="/design/answers/<%= answer.id %>/edit">Edit or Remove</a>
+                  </p>
+                  <p><strong>Times Selected:</strong> <%= answer.user_count %></p>
                 </li>
               <% end %>
             </ul>

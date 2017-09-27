@@ -27,7 +27,11 @@ end
 get '/:mode/surveys/:id' do
   @mode = params[:mode]
   @survey = Survey.find(params[:id].to_i)
-  erb(:survey)
+  if @mode == 'design'
+    erb(:survey)
+  elsif @mode == 'take'
+    erb(:take_survey)
+  end
 end
 
 get '/design/surveys/:id/edit' do
@@ -71,7 +75,7 @@ end
 
 post '/design/questions/:id/add-answer' do
   question = Question.find(params[:id].to_i)
-  @answer = Answer.new({answer_text: params['answer-text'], question_id: question.id})
+  @answer = Answer.new({answer_text: params['answer-text'], question_id: question.id, user_count: 0})
   if @answer.save
     redirect "/design/surveys/#{question.survey_id}"
   else
@@ -127,4 +131,22 @@ delete '/design/answers/:id/delete' do
     @object = @answer
     erb(:errors)
   end
+end
+
+post '/take/surveys/:id' do
+  @survey = Survey.find(params[:id].to_i)
+  @survey.questions.each do |question|
+    answer_id = params['question-' + question.id.to_s].to_i
+    answer = Answer.find(answer_id)
+    if !answer.update({user_count: (answer.user_count + 1)})
+      @object = answer
+      erb(:errors)
+    end
+  end
+  redirect "/take/surveys/#{@survey.id}/success"
+end
+
+get '/take/surveys/:id/success' do
+  @survey = Survey.find(params[:id].to_i)
+  erb(:success)
 end

@@ -1,0 +1,22 @@
+<h1><%= @survey.title %></h1>
+
+<% if @survey.questions.any? %>
+  <form class="" action="/take/surveys/<%= @survey.id %>" method="post">
+    <% @survey.questions.each do |question| %>
+      <div class="form-group">
+        <% if question.answers.any? %>
+          <label for="question-<%= question.id %>"><%= question.question_text %></label>
+          <select class="form-control" name="question-<%= question.id %>">
+            <% question.answers.each do |answer| %>
+              <option value="<%= answer.id %>"><%= answer.answer_text %></option>
+            <% end %>
+          </select>
+        <% end %>
+      </div>
+    <% end %>
+    <button type="submit" class="btn">Submit</button>
+  </form>
+<% else %>
+  <p>It looks like this survey has no questions yet.</p>
+  <p><a href="/take/surveys">Take a different survey.</a></p>
+<% end %>
