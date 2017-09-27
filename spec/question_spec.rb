@@ -23,4 +23,13 @@ describe('Question') do
       expect(question1.survey).to eq(survey)
     end
   end
+
+  describe '#answers' do
+    it "returns the possible answers to the question" do
+      survey = Survey.create({title: "Favorite Gems"})
+      question1 = Question.create({question_text: "Who is your favorite Crystal Gem?", number: 1, survey_id: survey.id})
+      answer = Answer.create({answer_text: "Garnet", question_id: question1.id})
+      expect(question1.answers).to eq([answer])
+    end
+  end
 end

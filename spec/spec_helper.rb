@@ -20,5 +20,9 @@ RSpec.configure do |config|
     Question.all.each do |question|
       question.destroy
     end
+
+    Answer.all.each do |answer|
+      answer.destroy
+    end
   end
 end
