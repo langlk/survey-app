@@ -69,6 +69,18 @@ post '/design/surveys/:id/add-question' do
   end
 end
 
+post '/design/questions/:id/add-answer' do
+  question = Question.find(params[:id].to_i)
+  @answer = Answer.new({answer_text: params['answer-text'], question_id: question.id})
+  if @answer.save
+    redirect "/design/surveys/#{question.survey_id}"
+  else
+    @mode = "design"
+    @survey = question.survey
+    erb(:survey)
+  end
+end
+
 get '/design/questions/:id/edit' do
   @question = Question.find(params[:id].to_i)
   erb(:question_edit)

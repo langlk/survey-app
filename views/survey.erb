@@ -9,8 +9,42 @@
     <% @survey.questions.each do |question| %>
       <li>
         <%= question.number %>. <%= question.question_text %>
+
         <% if @mode == "design" %>
           <a href="/design/questions/<%= question.id %>/edit">Edit or Remove</a>
+          <br>
+          <% if question.answers.any? %>
+            <ul>
+              <% question.answers.each do |answer| %>
+                <li>
+                  <%= answer.answer_text %>
+                  <a href="/design/answers/<%= answer.id %>/edit">Edit or Remove</a>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p>No answers added</p>
+          <% end %>
+
+          <% error = false %>
+          <% if @answer %>
+            <% error = @answer.question_id == question.id %>
+          <% end %>
+          <form class="" action="/design/questions/<%= question.id %>/add-answer" method="post">
+            <div class="form-group <%= error ? 'has-error' : nil %>">
+              <label for="answer-text" class="control-label">Add a possible answer:</label>
+              <input type="text" name="answer-text" class="form-control">
+            </div>
+            <% if (@answer != nil) & error %>
+              <div class="alert alert-danger">
+                 <% @answer.errors.full_messages.each do |message| %>
+                   <%= message + " " %>
+                 <% end %>
+              </div>
+            <% end %>
+            <button type="submit" class="btn">Add</button>
+          </form>
+
         <% end %>
       </li>
     <% end %>
