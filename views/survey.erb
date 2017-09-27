@@ -5,7 +5,7 @@
 
 <h3>Survey Questions</h3>
 <% if @survey.questions.any? %>
-  <ul>
+  <ul class="questions">
     <% @survey.questions.each do |question| %>
       <li>
         <%= question.number %>. <%= question.question_text %>
@@ -14,7 +14,7 @@
           <a href="/design/questions/<%= question.id %>/edit">Edit or Remove</a>
           <br>
           <% if question.answers.any? %>
-            <ul>
+            <ul class="answers">
               <% question.answers.each do |answer| %>
                 <li>
                   <%= answer.answer_text %>
@@ -44,7 +44,7 @@
                  <% end %>
               </div>
             <% end %>
-            
+
             <button type="submit" class="btn">Add</button>
           </form>
 

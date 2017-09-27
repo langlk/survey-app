@@ -54,4 +54,24 @@ describe 'The survey design path', {type: :feature} do
     click_button('Delete Question')
     expect(page).to have_no_content('What is your favorite kind of Pizza?')
   end
+
+  it "allows user to add and edit answers" do
+    visit('/design/surveys')
+    fill_in('title', with: 'Best Pizza Places')
+    click_button('Add Survey')
+    fill_in('number', with: '1')
+    fill_in('question-text', with: "What is your favorite kind of Pizza?")
+    click_button('Add Question')
+    fill_in('answer-text', with: "New York")
+    click_button('Add')
+    within('.answers') { click_link('Edit or Remove') }
+    fill_in('answer-text', with: "Chicago")
+    click_button('Update Answer')
+    expect(page).to have_content('Chicago')
+    expect(page).to have_no_content('New York')
+  end
+
+  it "allows user to delete answers" do
+
+  end
 end
