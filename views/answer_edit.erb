@@ -1,0 +1,25 @@
+<h1>Edit Answer</h1>
+
+<p><strong>Question:</strong> <%= @answer.question.question_text %></p>
+
+<form class="" action="/design/answers/<%= @answer.id %>/edit" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <div class="form-group <%= @answer.errors.any? ? 'has-error' : nil %>">
+    <label for="answer-text" class="control-label">Answer Text:</label>
+    <input type="text" name="answer-text" class="form-control" value="<%= @answer.answer_text %>">
+  </div>
+  <% if @answer.errors.any? %>
+    <div class="alert alert-danger">
+      <% @answer.errors.full_messages.each do |message| %>
+        <%= message + " " %>
+      <% end %>
+    </div>
+  <% end %>
+  <a href="/design/surveys/<%= @answer.question.survey_id %>"><button type="button" class="btn">Cancel</button></a>
+  <button type="submit" class="btn">Update Answer</button>
+</form>
+
+<form class="" action="/design/answers/<%= @answer.id %>/delete" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class="btn">Delete Answer</button>
+</form>

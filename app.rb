@@ -104,3 +104,27 @@ delete '/design/questions/:id/delete' do
     erb(:errors)
   end
 end
+
+get '/design/answers/:id/edit' do
+  @answer = Answer.find(params[:id].to_i)
+  erb(:answer_edit)
+end
+
+patch '/design/answers/:id/edit' do
+  @answer = Answer.find(params[:id].to_i)
+  if @answer.update({answer_text: params['answer-text']})
+    redirect "/design/surveys/#{@answer.question.survey_id}"
+  else
+    erb(:answer_edit)
+  end
+end
+
+delete '/design/answers/:id/delete' do
+  @answer = Answer.find(params[:id].to_i)
+  if @answer.delete
+    redirect "/design/surveys/#{@answer.question.survey_id}"
+  else
+    @object = @answer
+    erb(:errors)
+  end
+end
