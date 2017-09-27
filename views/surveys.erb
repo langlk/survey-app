@@ -1,0 +1,31 @@
+<h1>All Surveys</h1>
+
+<% if @surveys.any? %>
+  <ul>
+    <% @surveys.each do |survey| %>
+      <li>
+        <a href="/surveys/<%= @mode %>/<%= survey.id %>"><%= survey.title %></a>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no saved surveys yet.</p>
+<% end %>
+
+<% if @mode == "design" %>
+  <h3>Create a Survey</h3>
+  <form class="" action="/surveys/design" method="post">
+    <div class="form-group <%= @survey ? 'has-error' : nil %>">
+      <label for="title" class="control-label">Survey Title</label>
+      <input type="text" name="title" class=form-control>
+    </div>
+    <% if @survey %>
+      <div class="alert alert-danger">
+        <% @survey.errors.full_messages.each do |message| %>
+          <%= message + " "%>
+        <% end %>
+      </div>
+    <% end %>
+    <button type="submit" class="btn">Add Survey</button>
+  </form>
+<% end %>
