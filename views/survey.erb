@@ -8,8 +8,9 @@
   <ul>
     <% @survey.questions.each do |question| %>
       <li>
+        <%= question.number %>. <%= question.question_text %>
         <% if @mode == "design" %>
-            <%= question.number %>. <%= question.question_text %> <a href="/design/questions/<%= question.id %>/edit">Edit or Remove</a>
+          <a href="/design/questions/<%= question.id %>/edit">Edit or Remove</a>
         <% end %>
       </li>
     <% end %>
@@ -25,7 +26,7 @@
     <div class="row">
       <div class="form-group col-xs-2">
         <label for="number" class="control-label">Number:</label>
-        <input type="number" name="number" class="form-control">
+        <input type="number" name="number" class="form-control" min=1 value="<%= @survey.questions.length + 1 %>">
       </div>
 
       <div class="form-group col-xs-10 <%= @question ? 'has-error' : nil %>">
