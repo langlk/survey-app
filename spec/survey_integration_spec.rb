@@ -84,4 +84,23 @@ describe 'The survey design path', {type: :feature} do
     click_button('Delete Answer')
     expect(page).to have_no_content("New York")
   end
+
+  it "shows user how many times an answer has been chosen" do
+    visit('/design/surveys')
+    fill_in('title', with: 'Best Pizza Places')
+    click_button('Add Survey')
+    fill_in('number', with: '1')
+    fill_in('question-text', with: "What is your favorite kind of Pizza?")
+    click_button('Add Question')
+    fill_in('answer-text', with: "New York")
+    click_button('Add')
+    fill_in('answer-text', with: "Chicago")
+    click_button('Add')
+    visit('/take/surveys')
+    click_link('Best Pizza Places')
+    click_button('Submit')
+    visit('/design/surveys')
+    click_link('Best Pizza Places')
+    expect(page).to have_content('New York Edit or Remove Times Selected: 1')
+  end
 end
