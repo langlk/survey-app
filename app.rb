@@ -9,7 +9,7 @@ end
 
 get '/:mode/surveys' do
   @mode = params[:mode]
-  @surveys = Survey.all
+  @surveys = Survey.order(:title)
   erb(:surveys)
 end
 
@@ -18,7 +18,7 @@ post '/design/surveys' do
   if @survey.save
     redirect "/design/surveys/#{@survey.id}"
   else
-    @surveys = Survey.all
+    @surveys = Survey.order(:title)
     @mode = "design"
     erb(:surveys)
   end
