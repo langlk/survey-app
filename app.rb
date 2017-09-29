@@ -136,11 +136,13 @@ end
 post '/take/surveys/:id' do
   @survey = Survey.find(params[:id].to_i)
   @survey.questions.each do |question|
-    answer_id = params['question-' + question.id.to_s].to_i
-    answer = Answer.find(answer_id)
-    if !answer.update({user_count: (answer.user_count + 1)})
-      @object = answer
-      erb(:errors)
+    if question.answers.any?
+      answer_id = params['question-' + question.id.to_s].to_i
+      answer = Answer.find(answer_id)
+      if !answer.update({user_count: (answer.user_count + 1)})
+        @object = answer
+        erb(:errors)
+      end
     end
   end
   redirect "/take/surveys/#{@survey.id}/success"
