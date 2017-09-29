@@ -6,7 +6,7 @@
 <h3>Survey Questions</h3>
 <% if @survey.questions.any? %>
   <ul class="questions">
-    <% @survey.questions.each do |question| %>
+    <% @survey.questions.sort{|a,b| a.number <=> b.number}.each do |question| %>
       <li>
         <%= question.number %>. <%= question.question_text %>
 
@@ -15,7 +15,7 @@
           <br>
           <% if question.answers.any? %>
             <ul class="answers">
-              <% question.answers.each do |answer| %>
+              <% question.answers.sort{|a,b| a.id <=> b.id}.each do |answer| %>
                 <li>
                   <p>
                     <%= answer.answer_text %>

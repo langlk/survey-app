@@ -2,12 +2,12 @@
 
 <% if @survey.questions.any? %>
   <form class="" action="/take/surveys/<%= @survey.id %>" method="post">
-    <% @survey.questions.each do |question| %>
+    <% @survey.questions.sort{|a,b| a.number <=> b.number}.each do |question| %>
       <div class="form-group">
         <% if question.answers.any? %>
           <label for="question-<%= question.id %>"><%= question.question_text %></label>
           <select class="form-control" name="question-<%= question.id %>">
-            <% question.answers.each do |answer| %>
+            <% question.answers.sort{|a,b| a.id <=> b.id}.each do |answer| %>
               <option value="<%= answer.id %>"><%= answer.answer_text %></option>
             <% end %>
           </select>
